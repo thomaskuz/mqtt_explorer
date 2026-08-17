@@ -1,0 +1,119 @@
+TCP: 1883
+TCPS: 8883
+WS: 9000
+WSS: 9001
+NATS: 4222
+
+QueuedMessagesEnabled: true
+AllowRootWildcardSubscription: true
+
+# Rate limiting for MQTT clients (0 = unlimited)
+MaxPublishRate: 0    # Max messages per second a client can publish
+MaxSubscribeRate: 0  # Max messages per second a client can receive
+
+DefaultStoreType: SQLITE
+
+# Batches messages for delivery to clients to reduce eventBus overhead
+BulkProcessing:
+  Enabled: false
+  TimeoutMS: 50
+  BulkSize: 1000
+  WorkerThreads: 4
+
+# Bulk Processing configuration (Topic grouping + Worker threads)
+BulkMessaging:
+  Enabled: false
+  TimeoutMS: 100
+  BulkSize: 1000
+
+# MQTT TCP Server configuration (socket-level settings)
+MqttTcpServer:
+  NoDelay: true                  # TCP_NODELAY - disable Nagle's algorithm for immediate packet transmission
+  ReceiveBufferSizeKb: 512       # Socket receive buffer size (default: 512KB, recommended: 512KB-2MB for high load)
+  SendBufferSizeKb: 512          # Socket send buffer size (default: 512KB, recommended: 512KB-2MB for high load)
+  MaxMessageSizeKb: 512          # Maximum MQTT message size (default: 512KB)
+  MaxInFlightMessages: 10000      # Maximum number of in-flight QoS 1/2 messages per client (default: 10000)
+
+# Queue size configuration for high-load scenarios
+Queues:
+  SubscriptionQueueSize: 0      # Queue size for subscription add/delete operations (default: 10,000)
+  MessageQueueSize: 0           # Queue size for message add/delete operations (default: 100,000)
+  DatabaseBatchSize: 4000       # Batch size for database queue write/delete operations (default: 4,000)
+  MessageCacheSize: 4000        # Queued messages fetched and locked per persistent-session drain batch (default: 4,000)
+
+# User Management configuration
+UserManagement:
+  Enabled: false  # Set to true to enable user authentication and ACL
+  PasswordAlgorithm: bcrypt
+  CacheRefreshInterval: 60  # seconds
+  DisconnectOnUnauthorized: true
+
+Metrics:
+  Enabled: true
+  RetentionHours: 1   # Default 1 day
+  CollectionInterval: 10  # Collection interval in seconds (default: 1)
+
+# SQLite configuration
+SQLite:
+  Path: "/cfg-data"
+  EnableWAL: true  # Set to true for better performance, false for easier multi-client access
+
+Logging:
+  Memory:
+    Enabled: true
+    Entries: 1000
+
+GraphQL:
+  Enabled: true
+  Port: 4000
+  Path: /graphql
+
+RestApi:
+  Enabled: true
+
+Dashboard:
+  Enabled: true
+
+MCP:
+  Enabled: true
+  Port: 4001
+
+Prometheus:
+  Enabled: false
+  Port: 4002
+  RawQueryLimit: 10000  # RawQueryLimit: 0  # Set to 0 for unlimited
+
+I3x:
+  Enabled: false
+  Port: 4003
+  DefaultArchiveGroup: Default
+
+# Redis-compatible protocol server for Redis clients.
+RedisServer:
+  Enabled: false
+  Host: "0.0.0.0"
+  Port: 6379
+  RequireAuth: true
+  DefaultDb: 0
+  SetRetained: false
+  PublishQos: 0
+  KeysLimit: 10000
+
+# Features
+Features:
+  OpcUa: true
+  OpcUaServer: true
+  MqttClient: true
+  Kafka: true
+  Nats: true
+  Redis: true
+  RedisServer: true
+  Telegram: true
+  WinCCOa: true
+  WinCCUa: true
+  Plc4x: true
+  Neo4j: true
+  JdbcLogger: true
+  SparkplugB: true
+  FlowEngine: true
+  Agents: true

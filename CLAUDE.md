@@ -2,13 +2,15 @@
 
 An MQTT testing playground for experimenting with different MQTT brokers running in Docker containers.
 
-## Project Goal
+## Project Goals
 
-Build a modular testing environment to:
+**Primary:** Build a modular testing environment to:
 - Generate realistic sensor data at regular intervals
 - Test publishing to different MQTT brokers (running in separate Docker containers)
 - Compare broker behavior, performance, and reliability
 - Start with sensor data generation; expand to include MQTT publishing and subscription logic
+
+**Learning Objective:** Write state-of-the-art but simple Python code. As a beginner, the main focus is understanding **WHY** code is written in a specific way, not just HOW it works. All code should include clear reasoning and best-practice explanations.
 
 ## Architecture
 

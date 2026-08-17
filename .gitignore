@@ -7,3 +7,9 @@ __pycache__/
 dist/
 build/
 .DS_Store
+
+# Docker data volumes (stored locally, not in repo)
+monstermq_data/
+docker_data/
+*.db
+*.sqlite

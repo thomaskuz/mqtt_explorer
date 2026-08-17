@@ -1,10 +1,18 @@
-import json
 import random
 import time
 from datetime import datetime, timezone
+from pydantic import BaseModel
 
 SENSOR_ID = "sensor-01"
 INTERVAL_SECONDS = 5
+
+
+class SensorReading(BaseModel):
+    sensor_id: str
+    timestamp: str
+    temperature_c: float
+    humidity_pct: float
+    pressure_hpa: float
 
 
 def generate_reading() -> dict:
@@ -21,12 +29,12 @@ def main():
     print(f"Generating sensor data every {INTERVAL_SECONDS}s. Press Ctrl+C to stop.")
     try:
         while True:
-            reading = generate_reading()
-            print(json.dumps(reading))
+            reading_dict = generate_reading()
+            validated_reading = SensorReading(**reading_dict)
+            print(validated_reading.model_dump_json())
             time.sleep(INTERVAL_SECONDS)
     except KeyboardInterrupt:
         print("\nStopped.")
-
 
 if __name__ == "__main__":
     main()

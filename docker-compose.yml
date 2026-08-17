@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt_broker
+    ports:
+      - "1883:1883"    # MQTT protocol
+    networks:
+      - mqtt_network
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$SYS/broker/version"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  mqtt_network:
+    driver: bridge

@@ -31,7 +31,7 @@ def generate_reading() -> dict:
     }
 
 
-@app.get("/sensor", response_model=SensorReading)
+@app.get("/sensor", response_model=SensorReading) #response model specifies the expected response format for the endpoint
 def get_sensor_reading() -> dict:
     """Return a single sensor reading."""
     return generate_reading()
